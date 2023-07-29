@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock css_files %}
+
+{% block page_title %}
+    details
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <!-- <table class="table table-dark table-striped">
+        <tbody>
+            <tr>
+                <th scope="row">ts</th>
+                <td>{{ device_data.ts }}</td>
+            </tr>
+            <tr>
+                <th scope="row">interval</th>
+                <td>{{ device_data.interval }}</td>
+            </tr>
+            <tr>
+                <th scope="row">fullAlarmLimit</th>
+                <td>{{ device_data.fullAlarmLimit }}</td>
+            </tr>
+            <tr>
+                <th scope="row">version</th>
+                <td>{{ device_data.version }}</td>
+            </tr>
+            <tr>
+                <th scope="row">deltaTemp</th>
+                <td>{{ device_data.deltaTemp }}</td>
+            </tr>
+            <tr>
+                <th scope="row">deltaTime</th>
+                <td>{{ device_data.deltaTime }}</td>
+            </tr>
+            <tr>
+                <th scope="row">status</th>
+                <td>{{ device_data.status }}</td>
+            </tr>
+            <tr>
+                <th scope="row">deviceStatusCheckTime</th>
+                <td>{{ device_data.deviceStatusCheckTime }}</td>
+            </tr>
+            <tr>
+                <th scope="row">depth</th>
+                <td>{{ device_data.depth }}</td>
+            </tr>
+            <tr>
+                <th scope="row">fullness</th>
+                <td>{{ device_data.fullness }}</td>
+            </tr>
+            <tr>
+                <th scope="row">toleranceValue</th>
+                <td>{{ device_data.toleranceValue }}</td>
+            </tr>
+            <tr>
+                <th scope="row">sensorWakeUp</th>
+                <td>{{ device_data.sensorWakeUp }}</td>
+            </tr>
+        </tbody>
+    </table> -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+
+{% endblock content %}
+             
