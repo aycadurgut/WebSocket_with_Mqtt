@@ -20,5 +20,5 @@ client = mqtt.Client("gesk_listeneaaaar")
 client.username_pw_set(username="ayca", password="kiviseverim")
 client.on_connect = on_connect
 client.on_message = on_message
-client.connect('', )
+client.connect('95.70.201.96', 39039)
 client.loop_start()

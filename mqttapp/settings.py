@@ -1,4 +1,5 @@
 from pathlib import Path
+import datetime
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -6,20 +7,32 @@ SECRET_KEY = 'django-insecure-pc5(xu1y01gm&05k+roy4k&o1gjj9w=yhtkq=(kfef6726#)+4
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['*']
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    
+]
+
+CORS_ALLOW_ALL_ORIGINS = False
 
 INSTALLED_APPS = [
-    'mqtt',
+    "corsheaders",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mqtt',
     'rest_framework',
+    'account',
+    'channels',
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,12 +64,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mqttapp.wsgi.application'
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -84,9 +111,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ASGI_APPLICATION = 'your_project.routing.application'

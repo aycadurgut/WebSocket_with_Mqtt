@@ -7,13 +7,17 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import DeviceSerializer
 from .forms import DeviceForm
+from django.contrib.auth.decorators import login_required
+from rest_framework import views, status
 
+@login_required(login_url='/account/login')
 def index(request):
+    
     device_list = Device.objects.all()
     parsedDeviceList = []
     for device in device_list:
         print(device.message)
-        abc = str(device.message)[:-1]
+        abc = str(device.message).replace('\'','')
         print("abc: ",abc) 
         myDevice = json.loads(abc)['device']
         myNewObj = {
@@ -21,8 +25,10 @@ def index(request):
             "device": myDevice
         }
         parsedDeviceList.append(myNewObj)
-    return render(request, 'index.html', {"parsedDeviceList":parsedDeviceList})
+    
+    return render(request, 'index.html', {"parsedDeviceList":parsedDeviceList[::-1]})
 
+@login_required(login_url='/account/login')
 def details(request, id):
     device = get_object_or_404(Device, pk=id)
     abc = str(device.message)[:-1]
@@ -46,6 +52,7 @@ def details(request, id):
 
     return render(request, 'details.html', {"device_data": device_data, "form": form})
 
+@login_required(login_url='/account/login')
 def deltaTEMP(request):
     device_list = Device.objects.all()
     parsedDeviceList = []
@@ -61,13 +68,14 @@ def deltaTEMP(request):
         parsedDeviceList.append(myNewObj)
     return render(request, 'deltaTEMP.html', {"parsedDeviceList":parsedDeviceList})
 
-
+@login_required(login_url='/account/login')
 @api_view(['GET'])
 def device_list(request):
     devices = Device.objects.all()
     serializer = DeviceSerializer(devices, many=True)
     return Response(serializer.data)
 
+@login_required(login_url='/account/login')
 @api_view(['GET'])
 def device_detail(request, id):
         device = get_object_or_404(Device, pk=id)

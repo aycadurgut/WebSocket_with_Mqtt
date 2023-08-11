@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock css_files %}
+
+{% block page_title %}
+    register.html
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <h1>Register</h1>
+            <hr>
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {% if error %}
+                <div class="alert alert-warning">
+                    {{ error }}
+                {% endif %}
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name and surname</label>
+                    <input type="text" name="name" id="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Choose a username</label>
+                    <input type="text" name="username" id="username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Enter e-mail</label>
+                    <input type="email" name="email" id="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" id="password" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="repassword" class="form-label">Confirm Password</label>
+                    <input type="password" name="repassword" id="repassword" class="form-control" required>
+                </div>
+                <input type="submit" value="Register" class="btn btn-danger">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block js_files %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js"></script>
+{% endblock %}

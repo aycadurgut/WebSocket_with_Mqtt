@@ -3,11 +3,11 @@
 {% load static %}
 
 {% block css_files %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
 {% endblock css_files %}
 
 {% block page_title %}
-    index
+index
 {% endblock page_title %}
 
 {% block content %}
@@ -17,12 +17,12 @@
         <button type="button" class="btn btn-danger">Devices with deltaTemp > 50</button>
     </a>
 </div>
- 
+
 <div class="container mt-5">
     <table class="table table-dark table-striped">
         <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">id</th>
                 <th scope="col">ts</th>
                 <th scope="col">interval</th>
                 <th scope="col">fullAlarmLimit</th>
@@ -32,10 +32,11 @@
                 <th scope="col"></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="mqttTableBody">
+
             {% for device in parsedDeviceList %}
                 <tr>
-                    <th scope="row"> </th>
+                    <td>{{ device.id }}</td>
                     <td>{{ device.device.ts }}</td>
                     <td>{{ device.device.interval }}</td>
                     <td>{{ device.device.fullAlarmLimit }}</td>
@@ -51,6 +52,33 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+        crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const socket = io.connect('http://localhost:3000',
+                {
+                    transports: ["websocket"],
+                    cors: {
+                        origin: "http://localhost:3000/",
+                    },
+                });
+
+            socket.on('mqttData', (data) => {
+                location.reload()
+            });
+        });  
+    </script>
+
 </div>
 
 {% endblock content %}
+
+{% block js_files %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js"></script>
+
+{% endblock %}

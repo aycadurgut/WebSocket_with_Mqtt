@@ -7,12 +7,12 @@ class DeviceForm(forms.ModelForm):
         model = Device
         fields = '__all__'
         labels = {
-            'topic': "Topic",
-            'message': "Message",
-            'device_serial': "Device Serial",
+            'topic': 'Konu',
+            'message':"Mesaj",
+            'device_serial': 'Cihaz Seri Numarası',
         }
         widgets = {
-            "topic": widgets.TextInput(attrs={'class': 'form-control'}),
-            "message": widgets.Textarea(attrs={'class': 'form-control'}),
-            "device_serial": widgets.NumberInput(attrs={'class': 'form-control'}),
+            "topic": widgets.TextInput(attrs={"class":"form-control"}),
+            "message": widgets.Textarea(attrs={"class":"form-control"}),
+            "device_serial": widgets.NumberInput(attrs={"class":"form-control"}),
         }
